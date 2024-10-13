@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TES 1</title>
+    <link rel="stylesheet" href="food.css">
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+        crossorigin="anonymous"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+
+</head>
+
+<body>
+    <!-- judul -->
+    <h1 class="judul">Jual Makanan</h1>
+
+    <!-- card -->
+
+    <div class="container mb-4">
+        <div class="row row-cols-1 row-cols-sm-2 row-cols-lg-3 justify-content-center ">
+            <div class="col">
+                <div class="card" style="width: 300px;">
+                    <img class="card-img-top" src="img/nasgor.jpeg" style="width: 100%; height: 200px;"
+                        alt="Card image cap">
+                    <div class="card-body">
+                        <h5 class="card-title">Nasi Goreng</h5>
+                        <p class="card-text">Some quick example text to build on the card title and make up the bulk of
+                            the card's content.</p>
+
+                        <h5 class="card-price mb-4">Rp. 30,000</h5>
+
+                        <label for="quantity" class="mb-2">Quantity:</label>
+                        <input type="number" name="quantity" class=" quantity-input qty-input mb-4" min="1" max="">
+                        <br>
+
+                        <button type="button" class="add-to-cart btn btn-primary">Add To Cart</button>
+                    </div>
+                </div>
+
+
+            </div>
+
+            <div class="col">
+                <div class="card" style="width: 300px;">
+                    <img class="card-img-top" src="img/nasgor.jpeg" style="width: 100%; height: 200px;"
+                        alt="Card image cap">
+                    <div class="card-body">
+                        <h5 class="card-title">Babi Goreng</h5>
+                        <p class="card-text">Some quick example text to build on the card title and make up the bulk of
+                            the card's content.</p>
+
+                        <h5 class="card-price mb-4">Rp. 25,000</h5>
+
+                        <label for="quantity" class="mb-2">Quantity:</label>
+                        <input type="number" name="quantity" class=" quantity-input qty-input mb-4" min="1" max="">
+                        <br>
+
+                        <button type="button" class="add-to-cart btn btn-primary">Add To Cart</button>
+                    </div>
+                </div>
+
+
+            </div>
+
+
+
+        </div>
+    </div>
+    <!-- card end -->
+
+    <!-- cart -->
+    <h3 class="cart-title">Cart</h3>
+
+    <!-- table -->
+    <div class="table-wrapper">
+        <div class="table-responsive col-11 col-md-10">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th scope="col">No</th>
+                        <th scope="col">Name</th>
+                        <th scope="col">Quantity</th>
+                        <th scope="col">Price</th>
+                        <th scope="col">Action</th>
+
+                    </tr>
+                </thead>
+
+                <tbody id="cart-body">
+                    <!-- scriptnya msk sini -->
+
+                </tbody>
+
+            </table>
+        </div>
+    </div>
+    <!-- table end -->
+
+
+    <div class="btn-wrapper text-center">
+        <h5>Total: <span id="total-price">Rp. 0</span></h5>
+        <button type="button" class="btn btn-info btn-order">Place Order</button>
+    </div>
+
+
+    <script>
+        $(document).ready(function () {
+            let itemCount = 1;
+            let totalPrice = 0;
+
+            // add to cart
+            $(document).on('click', '.add-to-cart', function (e) {
+                e.preventDefault();
+
+                const card = $(this).closest('.card-body');
+                const name = card.find('.card-title').text();
+                const price = parseFloat(card.find('.card-price').text().replace('Rp. ', '').replace(',', ''));
+                const quantity = parseInt(card.find('.quantity-input').val(), 10);
+
+                const itemTotalPrice = price * quantity;
+                totalPrice += itemTotalPrice;
+
+                const cartRow = `
+            <tr>
+                <td>${itemCount++}</td>
+                <td>${name}</td>
+                <td><input type="number" class="form-control item-quantity" value="${quantity}" min="1" data-price="${price}"></td>
+                <td class="item-price" data-price="${price}">Rp. ${itemTotalPrice.toLocaleString()}</td>
+                <td><button type="button" class="btn btn-danger btn-remove">Remove</button></td>
+            </tr>
+        `;
+
+                $('#cart-body').append(cartRow);
+                $('#total-price').text(`Rp. ${totalPrice.toLocaleString()}`);
+            });
+
+            // update item quantity dan harga
+            $('#cart-body').on('input', '.item-quantity', function () {
+                const row = $(this).closest('tr');
+                const quantity = parseInt($(this).val(), 10);
+                const pricePerUnit = parseFloat($(this).data('price'));
+                const itemTotalPrice = pricePerUnit * quantity;
+
+                // update harga total item di baris tsb
+                row.find('.item-price').text(`Rp. ${itemTotalPrice.toLocaleString()}`);
+
+                // panggil fungsi untuk update total harga all item di cart
+                updateTotalPrice();
+            });
+
+            // hapus item dari cart
+            $('#cart-body').on('click', '.btn-remove', function () {
+                const row = $(this).closest('tr');
+                const itemTotalPrice = parseFloat(row.find('.item-price').text().replace('Rp. ', '').replace(',', ''));
+                totalPrice -= itemTotalPrice;
+                $('#total-price').text(`Rp. ${totalPrice.toLocaleString()}`);
+                row.remove();
+            });
+
+            // place order
+            $('.btn-order').click(function () {
+                // kosongin cart
+                $('#cart-body').empty();
+                // update harga jadi 0
+                $('#total-price').text('Rp. 0');
+                itemCount = 1;
+                totalPrice = 0;
+                alert('Your order has been placed!');
+            });
+
+            // Function to update total price
+            function updateTotalPrice() {
+                totalPrice = 0;
+                $('#cart-body .item-price').each(function () {
+                    totalPrice += parseFloat($(this).text().replace('Rp. ', '').replace(',', ''));
+                });
+                $('#total-price').text(`Rp. ${totalPrice.toLocaleString()}`);
+            }
+        });
+
+    </script>
+
+</body>
+
+</html>

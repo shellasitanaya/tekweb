@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TES 1 KLS LAIN</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+        crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="krisna.css">
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+</head>
+
+<body>
+    <!-- As a heading -->
+    <nav class="navbar bg-body-tertiary">
+        <div class="container-fluid">
+            <span class="navbar-brand mb-0 h1">Kanban View</span>
+        </div>
+    </nav>
+
+    <!-- card -->
+    <div class="container">
+        <div class="row">
+            <div class="col">
+                <div class="card mt-3">
+                    <div class="card-header">
+                        Pending
+                    </div>
+                    <div class="card-body" id="pending-body">
+                    </div>
+                </div>
+            </div>
+
+            <div class="col">
+                <div class="card mt-3">
+                    <div class="card-header">
+                        Planning
+                    </div>
+                    <div class="card-body" id="planning-body">
+
+                    </div>
+                </div>
+            </div>
+
+            <div class="col">
+                <div class="card mt-3">
+                    <div class="card-header ">
+                        Design
+                    </div>
+                    <div class="card-body" id="design-body">
+
+                    </div>
+                </div>
+            </div>
+
+            <div class="col">
+                <div class="card mt-3">
+                    <div class="card-header ">
+                        Development
+                    </div>
+                    <div class="card-body" id="development-body">
+
+                    </div>
+                </div>
+            </div>
+
+            <div class="col">
+                <div class="card mt-3">
+                    <div class="card-header ">
+                        Testing
+                    </div>
+                    <div class="card-body" id="testing-body">
+
+                    </div>
+                </div>
+            </div>
+
+            <div class="col">
+                <div class="card mt-3">
+                    <div class="card-header ">
+                        Resolved
+                    </div>
+                    <div class="card-body" id="resolved-body">
+
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <!-- card end -->
+
+    <!-- form -->
+    <div class="form-container ">
+        <form id="taskForm">
+            <div class="form-content d-flex justify-content-center align-items-center">
+
+
+                <div class="form-row col-10">
+                    <div class="form-group ">
+                        <label for="inputTugas">Tugas</label>
+                        <input type="text" class="form-control" id="inputTugas" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="inputStatus">Status</label>
+                        <select id="inputStatus" class="form-control" required>
+                            <option selected>Choose...</option>
+                            <option>Pending</option>
+                            <option>Planning</option>
+                            <option>Design</option>
+                            <option>Development</option>
+                            <option>Testing</option>
+                            <option>Resolved</option>
+
+                        </select>
+                    </div>
+                    <button type="submit" class="btn btn-primary mt-3">Add</button>
+                </div>
+
+        </form>
+    </div>
+
+    <script>
+        $(document).ready(function () {
+            $('#taskForm').on("submit", function (event) {
+                event.preventDefault();
+
+                // manggil fungsi setelah submit
+                addCard();
+
+                function addCard() {
+                    var status = $('#inputStatus').val();
+                    var tugas = $('#inputTugas').val();
+
+
+                    var cardBodyID = '';
+
+                    if (status == 'Pending') {
+                        cardBodyID = '#pending-body';
+                    } else if (status == 'Planning') {
+                        cardBodyID = '#planning-body';
+                    } else if (status == 'Design') {
+                        cardBodyID = '#design-body';
+                    } else if (status == 'Development') {
+                        cardBodyID = '#development-body';
+                    } else if (status == 'Testing') {
+                        cardBodyID = '#testing-body';
+                    } else if (status == 'Resolved') {
+                        cardBodyID = '#resolved-body';
+                    }
+
+
+                    const card_task = `
+                    <div class="tugas">${tugas}</div>
+                    `
+
+                    $(cardBodyID).append(card_task);
+                    $('#inputStatus').val('Choose...');
+                    $('#inputTugas').val('');
+
+
+                    $(".tugas").on("dblclick", function () {
+                        // remove
+                        $(".tugas").remove();
+                    });
+
+                }
+
+            });
+
+        });
+
+    </script>
+
+
+
+
+
+</body>
+
+</html>

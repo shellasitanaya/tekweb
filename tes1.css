@@ -1,0 +1,78 @@
+body {
+    background-color: rgba(114, 234, 238, 0.779) !important;
+    height: 100vh;
+}
+
+/* button */
+/* add a new card */
+#add-new-card-btn {
+    background-color: rgb(78, 189, 237) !important;
+}
+
+#add-new-card-btn:hover {
+    background-color: rgb(130, 130, 221) !important;
+}
+
+.add-card {
+    margin: 10px;
+}
+
+.add-desc {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 20px;
+}
+
+/* card */
+.col {
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 25px;
+
+}
+
+.card {
+    text-align: center;
+    background-color: rgba(255, 255, 255, 0.5) !important;
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border-radius: 15px;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.25);
+
+}
+
+.row {
+    border-bottom: rgb(79, 76, 76) solid 1px;
+
+}
+
+
+/* form */
+.container-form {
+    background-color: rgba(255, 255, 255, 0.5);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border-radius: 15px;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.25);
+    height: auto;
+    width: 300px;
+    padding: 20px;
+    margin: 20px;
+}
+
+form {
+    justify-content: center !important;
+    display: flex !important;
+}
+
+.add-titlee {
+    cursor: pointer;
+    background-color: rgb(78, 189, 237) !important;
+}
+
+.add-titlee:hover {
+    background-color: rgb(130, 130, 221) !important;
+}

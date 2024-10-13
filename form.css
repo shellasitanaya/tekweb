@@ -1,0 +1,89 @@
+body{
+    background-color: #a18cd1 !important;
+    /* background-image: linear-gradient(to top, #a18cd1 0%, #fbc2eb 100%);
+    height: 100%; */
+   
+     /* background-image: linear-gradient(to top, #fad0c4 0%, #ffd1ff 100%); */
+}
+
+.container-form {
+    background-color: rgba(255, 255, 255, 0.2); 
+    backdrop-filter: blur(10px); 
+    -webkit-backdrop-filter: blur(10px); 
+    border-radius: 15px; 
+    border: 1px solid rgba(255, 255, 255, 0.3); 
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.25); 
+    height: auto;
+    width: 300px;
+    padding: 30px;
+    margin: 50px;
+}
+
+
+form{
+    justify-content: center;
+    display: flex;
+}
+
+.title{
+    justify-content: center;
+    display: flex;
+    color: white;
+}
+
+.card{
+    position: absolute;
+}
+
+.col {
+    margin-bottom: 20px; 
+}
+
+
+.card {
+    gap: 20px;
+    background-color: rgba(255, 255, 255, 0.7) !important; 
+    backdrop-filter: blur(10px); 
+    -webkit-backdrop-filter: blur(10px); 
+    border-radius: 15px; 
+    border: 1px solid rgba(255, 255, 255, 0.3); 
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.25); 
+    min-height: 220px !important;
+    padding-bottom: 15px;
+    margin-bottom: 10px;
+}
+
+.row {
+    margin-left: 0;
+    margin-right: 0;
+}
+
+h3.card-text {
+    border-bottom: 2px solid #000;
+    padding-bottom: 5px;
+}
+
+
+/* close button */
+.btn-close{
+    position: relative;
+    top: 20px;
+    left: 80%;  
+}
+
+button.btn-close{
+    font-size: 14px;
+    padding: 9px;
+    background-color: rgb(202, 75, 183);
+    cursor: pointer;
+}
+
+.btn-add{
+    background-color: rgb(232, 100, 212) !important;
+    color: white !important;
+    cursor: pointer;
+}
+
+.btn-add:hover{
+    background-color: rgb(139, 94, 211) !important;
+}

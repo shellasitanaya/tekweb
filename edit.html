@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="edit.css">
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+        crossorigin="anonymous"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+
+</head>
+
+<body>
+    <div>
+        <h1 class="title mt-4">Registration Form</h1>
+    </div>
+
+    <form id="form-regist">
+        <div class="container-form col-9 col-md-7 col-lg-6 ">
+            <div class="form-wrapper ">
+                <div class="form-group mb-3">
+                    <label for="inputName">Name</label>
+                    <input type="text" id="name" class="form-control" placeholder="Masukkan Nama" required>
+                </div>
+
+                <div class="form-row mb-4">
+                    <div class="form-group">
+                        <label for="inputEmail">Email</label>
+                        <input type="email" id="email" class="form-control" placeholder="Email" required>
+                    </div>
+                </div>
+
+                <button type="submit" class="btn btn-primary">Add</button>
+            </div>
+        </div>
+    </form>
+
+
+    <!-- card -->
+    <!-- <div class="container mb-4">
+        <div class="row">
+            <div class="col">
+
+                <div class="card" style="width: 250px;">
+                    <button type="button" class="btn-close" aria-label="Close"></button>
+
+                    <div class="card-body">
+                        <h5 class="card-title">Halo </h5>
+                        <p class="card-text">Nama: </p>
+                        <p class="card-text">Email: </p>
+
+                        <a href="#" class="btn btn-primary">Edit</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div> -->
+
+    <!-- buat nambah card dynamically -->
+    <div class="container mb-4" id="card-container">
+        
+        <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-3 d-flex justify-content-center" id="card-row"></div>
+
+    </div>
+
+    <!-- modal -->
+    <div class="modal" id="editModal" tabindex="-1">
+        <div class="modal-dialog">
+          <div class="modal-content">
+
+            <div class="modal-header">
+              <h5 class="modal-title">Modal title</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+
+            <div class="modal-body">
+              
+              <form id="form-regist-edit">
+                <div class="container-form col-7">
+                    <div class="form-wrapper">
+                        <div class="form-group mb-3">
+                            <label for="editName">Name</label>
+                            <input type="text" id="edit-name" class="form-control" placeholder="Masukkan Nama" required>
+                        </div>
+        
+                        <div class="form-row mb-4">
+                            <div class="form-group">
+                                <label for="editEmail">Email</label>
+                                <input type="email" id="edit-email" class="form-control" placeholder="Email" required>
+                            </div>
+                        </div>
+        
+                        <!-- <button type="submit" class="btn btn-primary btn-edit">Add</button> -->
+                    </div>
+                </div>
+            </form>
+
+            </div>
+
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+              <button type="button" class="btn btn-primary" id="save-changes">Save changes</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    <script>
+        $(document).ready(function () {
+            $('#form-regist').submit(function (e) {
+                // biar form ga auto kekirim & ga ke refresh
+                e.preventDefault();
+
+                // ngambil value
+                var name = $('#name').val();
+                var email = $('#email').val();
+
+                //buat unik id untuk setiap card
+                var cardId = Date.now();
+
+                // buat card
+                var card = `
+                        <div class="col d-flex justify-content-center align-items-center" id="card-${cardId}">
+                            <div class="card" style="width: 250px;">
+                                <button type="button" class="btn-close" aria-label="Close"></button>
+                                <div class="card-body">
+                                    <h5 class="card-title">Hello, ${name} </h5>
+                                    <p class="card-text">Nama:  ${name}</p>
+                                    <p class="card-text">Email: ${email}</p>
+            
+                                    <a href="#" class="btn btn-primary btn-edit" data-id="${cardId}">Edit</a>
+                                </div>
+                            </div>
+                        </div>
+                `;
+
+                // append card ke row
+                $('#card-row').append(card);
+
+                // clear input field form
+                $('#form-regist')[0].reset();
+
+            });
+
+            //close btn
+            $(document).on('click', '.btn-close', function(){
+                //hapus kolom card dari card-row
+                $(this).closest('.col').remove();
+            });
+
+            //edit btn
+            $(document).on('click','.btn-edit', function(e){
+                e.preventDefault();
+
+                var cardId = $(this).data('id');
+                var cardElement = $(`#card-${cardId}`);
+                // ngambil nilai nama dan email (ngambilnya setelah tulisan "nama: " blabal)
+                var name = cardElement.find('.card-text').first().text().replace('Nama: ','');
+                var email = cardElement.find('.card-text').last().text().replace('Email: ', '');
+
+                // first, last bisa ganti pake eq(0), eq(1), dst
+
+                // isi modal dengan data dari card
+                $('#edit-name').val(name);
+                $('#edit-email').val(email);
+                $('#editModal').modal('show');
+
+                // save changes
+                $('#save-changes').off('click').on('click', function(){
+                    var newName = $('#edit-name').val();
+                    var newEmail = $('#edit-email').val();
+
+                    // update card dengan data baru
+                    cardElement.find('.card-title').text(`Hello, ${newName}`);
+                    cardElement.find('.card-text').first().text(`Name: ${newName}`);
+                    cardElement.find('.card-text').last().text(`Email: ${newEmail}`);
+
+                    // contoh kalau mau ngambil text index ke 3
+                    // cardElement.find('card-text').eq(2).text();
+
+                    // close modal
+                    $('#editModal').modal('hide');
+
+                });
+            });
+            // modal end
+
+            
+        });
+
+    </script>
+
+</body>
+
+
+</html>

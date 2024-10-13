@@ -1,0 +1,49 @@
+.judul{
+    margin: 30px;
+    display: flex;
+    justify-content: center;
+}
+
+/* card */
+.col{
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 25px;
+    
+}
+
+.card{
+    text-align: center;
+}
+
+
+.qty-input{
+    width: 80px;
+    text-align: center;
+    margin-left: 10px;
+}
+
+/* cart */
+.cart-title{
+    display: flex;
+    justify-content: center;
+    margin-bottom: 10px;
+}
+/* table */
+.table-wrapper{
+    display: flex;
+    justify-content: center;
+    text-align: center;
+}
+
+/* btn */
+.btn-order{
+    margin: 20px;
+    width: 180px;
+}
+
+.total{
+    text-align: center;
+    margin-top: 20px;
+}
